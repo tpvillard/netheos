@@ -16,18 +16,41 @@ import java.util.List;
 public class FaqDAO {
 
 
-    private static final String SELECT_ALL_QUERY = "select question, answer, tags from faq";
-    private final Configuration config;
-    private final ConnectionProvider provider;
+    private static final String SELECT_ALL_QUERY = "SELECT question, answer, tags FROM faq";
 
+    private final ConnectionProvider provider;
 
     public FaqDAO(Configuration config) {
 
-        this.config = config;
         provider = new ConnectionProvider(config.getDbUrl());
     }
 
+    /**
+     * Returns all the frequently asked questions
+     *
+     * @return the faq list
+     */
     public List<Faq> getFaqs() {
+        return getFaqs(SELECT_ALL_QUERY);
+    }
+
+    public List<Faq> searchFaqs(String queriedString) {
+
+        return getFaqs(buildSearchQuery(queriedString));
+    }
+
+    private String buildSearchQuery(String query) {
+
+        // Single quote in the queried string should be escaped.
+        String escapedQuery = query.replaceAll("'","''");
+        return SELECT_ALL_QUERY +
+                " WHERE question LIKE '%" + escapedQuery + "%'" +
+                "UNION " +
+                SELECT_ALL_QUERY +
+                " WHERE answer LIKE '%" + escapedQuery + "%'";
+    }
+
+    private List<Faq> getFaqs(String query) {
 
         List<Faq> faqs = new ArrayList<>();
 
@@ -35,7 +58,7 @@ public class FaqDAO {
         Connection con = provider.get();
         try (Statement stmt = con.createStatement()) {
 
-            ResultSet rs = stmt.executeQuery(SELECT_ALL_QUERY);
+            ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 String question = rs.getString("question");
                 String answer = rs.getString("answer");

@@ -43,6 +43,7 @@ import com.biffbangpow.faq.config.Configuration;
 import com.biffbangpow.faq.db.FaqDAO;
 import com.biffbangpow.faq.resources.FaqDAOExceptionMapper;
 import com.biffbangpow.faq.resources.FaqsResource;
+import com.biffbangpow.faq.resources.SearchResource;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.message.MessageProperties;
 import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
@@ -59,6 +60,7 @@ public class App extends ResourceConfig {
 
     public App(Configuration config, FaqDAO dao) {
         registerClasses(FaqsResource.class);
+        registerClasses(SearchResource.class);
         registerClasses(FaqDAOExceptionMapper.class);
         property(MessageProperties.XML_FORMAT_OUTPUT, true);
         register(createMoxyJsonResolver());

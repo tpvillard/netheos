@@ -1,16 +1,11 @@
 package com.biffbangpow.faq.db;
 
-
 import com.biffbangpow.faq.config.ConfigAccess;
 import com.biffbangpow.faq.config.ConfigAccessException;
 import com.biffbangpow.faq.config.Configuration;
-import com.biffbangpow.faq.model.Faq;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import java.sql.SQLException;
-import java.util.List;
 
 public class FaqDAOTest {
 
@@ -27,5 +22,20 @@ public class FaqDAOTest {
     @Test
     public void should_return_all_faqs() {
         Assert.assertEquals(dao.getFaqs().size(), 3);
+    }
+
+    @Test
+    public void should_return_1_faq() {
+        Assert.assertEquals(dao.searchFaqs("hennit").size(), 1);
+    }
+
+    @Test
+    public void should_return_3_faq() {
+        Assert.assertEquals(dao.searchFaqs("cheval").size(), 3);
+    }
+
+    @Test
+    public void should_fix_simple_quotes_in_query() {
+        Assert.assertEquals(dao.searchFaqs("l'hotel").size(), 0);
     }
 }
