@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="census">
+	<test name="Regression" verbose="2">
+		<packages>
+			<package name="com.biffbangpow.faq.*"/>
+		</packages>
+	</test>
+</suite>

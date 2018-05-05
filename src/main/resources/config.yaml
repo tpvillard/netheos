@@ -1,0 +1,8 @@
+# Configuration file for the app.
+#
+#####################################################
+
+dbUrl: jdbc:sqlite:src/main/resources/faq.db
+dbName: faq
+port: 8082
+docRoot: webapp
