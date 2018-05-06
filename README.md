@@ -45,9 +45,9 @@ Les tokens sont des jwts ayant une durée de vie limitée à 60 minutes.
 
 * Pour lister toutes les faqs dans la base (avec un token administrateur):
 
-curl -i -H "Accept: application/json" -H "Authorization: Bearer <token>" -X GET http://localhost:8082/faq-api/faqs
+curl -i -H "Accept: application/json" -H "Authorization: Bearer \<token\>" -X GET http://localhost:8082/faq-api/faqs
 
 Pour chercher des faqs dans la base (avec un token utilisateur):
 
-curl -i -H "Accept: application/json" -H "Authorization: Bearer <token>" -X GET http://localhost:8082/faq-api/search?query=<string>
+curl -i -H "Accept: application/json" -H "Authorization: Bearer \<token\>" -X GET http://localhost:8082/faq-api/search?query=<string>
 
