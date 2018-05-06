@@ -37,13 +37,16 @@ Pour effectuer des requêtes:
 
 * Generer un token d'acces.
 
-Utiliser la classe de test GenerateTokenTest. la classe fournit en sortie
-deux tokens. 1 token pour l'admin bob, 1 token pour l'utilisatrice alice.
-Les tokens sont des jwt à une durée de vie limitée à 60 minutes.
+Utiliser la classe de test GenerateTokens (sous src/test). la classe fournit en sortie deux tokens. 
+1 token pour l'administrateur bob, 1 token pour l'utilisatrice alice.
+Les tokens sont des jwts ayant une durée de vie limitée à 60 minutes.
 (L'application n'est pas complète et ne fournit pas de mécanisme pour rafraichir les tokens)
 
-Pour lister toutes les faqs dans la base:
+* Pour lister toutes les faqs dans la base (avec un token administrateur):
 
+curl -i -H "Accept: application/json" -H "Authorization: Bearer <token>" -X GET http://localhost:8082/faq-api/faqs
 
+Pour chercher des faqs dans la base (avec un token utilisateur):
 
-Pour rechercher des faqs dans la base:
+curl -i -H "Accept: application/json" -H "Authorization: Bearer <token>" -X GET http://localhost:8082/faq-api/search?query=<string>
+
