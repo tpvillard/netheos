@@ -38,16 +38,20 @@ Pour effectuer des requêtes:
 
 * Generer un token d'acces.
 
-Utiliser la classe de test GenerateTokens (sous src/test). la classe fournit en sortie deux tokens. 
+Utiliser la classe GenerateTokens (sous src/test). la classe fournit en sortie deux tokens. 
 1 token pour l'administrateur bob, 1 token pour l'utilisatrice alice.
 Les tokens sont des jwts ayant une durée de vie limitée à 60 minutes.
 (L'application n'est pas complète et ne fournit pas de mécanisme pour rafraichir les tokens)
 
+* Pour insérer une nouvelle faq (avec un token administrateur):
+
+curl -H "Content-Type: application/json" -H "Authorization: Bearer \<token\>" -d '{"question":"Comment ça va?","answer":"Pas mal et toi?","tags":""}' http://localhost:8082/faq-api/faqs
+
 * Pour lister toutes les faqs dans la base (avec un token administrateur):
 
-curl -i -H "Accept: application/json" -H "Authorization: Bearer \<token\>" -X GET http://localhost:8082/faq-api/faqs
+curl -i -H "Accept: application/json" -H "Authorization: Bearer \<token\>" http://localhost:8082/faq-api/faqs
 
-Pour chercher des faqs dans la base (avec un token utilisateur):
+* Pour chercher des faqs dans la base (avec un token utilisateur):
 
-curl -i -H "Accept: application/json" -H "Authorization: Bearer \<token\>" -X GET http://localhost:8082/faq-api/search?query=<string>
+curl -i -H "Accept: application/json" -H "Authorization: Bearer \<token\>" http://localhost:8082/faq-api/search?query=<string>
 

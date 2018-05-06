@@ -17,9 +17,11 @@ import org.testng.annotations.Test;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.List;
@@ -64,6 +66,15 @@ public class FaqsResourceTest {
     @Test
     public void should_get_faqs_in_json_format() {
         getFaqs(MediaType.APPLICATION_JSON_TYPE);
+    }
+
+    public void should_create_a_faq() throws InterruptedException {
+
+        Faq faq = Faq.of("How are you?", "Not bad", "");
+        Response response = faqsTarget.request().post(Entity.json(faq));
+        if (response.getStatus() != 201) {
+            Assert.fail("Should have returned 201 Created");
+        }
     }
 
     private void getFaqs(MediaType mediaType) {

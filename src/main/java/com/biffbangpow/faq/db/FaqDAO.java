@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class FaqDAO {
 
 
     private static final String SELECT_ALL_QUERY = "SELECT question, answer, tags FROM faq";
+    private static final MessageFormat INSERT_MSG =
+            new MessageFormat("INSERT INTO faq VALUES ({0}, {1}, {2})");
 
     private final ConnectionProvider provider;
 
@@ -46,7 +49,7 @@ public class FaqDAO {
     private String buildSearchQuery(String query) {
 
         // Single quote in the queried string should be escaped.
-        String escapedQuery = query.replaceAll("'","''");
+        String escapedQuery = query.replaceAll("'", "''");
         return SELECT_ALL_QUERY +
                 " WHERE question LIKE '%" + escapedQuery + "%'" +
                 "UNION " +
@@ -74,4 +77,28 @@ public class FaqDAO {
         }
         return faqs;
     }
+
+    public void create(Faq faq) {
+
+        Connection con = provider.get();
+        try (Statement stmt = con.createStatement()) {
+
+            stmt.executeUpdate(buildInsertString(faq));
+        } catch (SQLException ex) {
+            throw new FaqDAOException(ex.getMessage(), ex.getCause());
+        }
+    }
+
+    String buildInsertString(Faq faq) {
+
+        Object[] args = {appendSingleQuote(faq.getQuestion()),
+                appendSingleQuote(faq.getAnswer()),
+                appendSingleQuote(faq.getTags())};
+        return INSERT_MSG.format(args);
+    }
+
+    String appendSingleQuote(String input) {
+        return "'" + input.replace("'", "''") + "'";
+    }
+
 }
