@@ -30,14 +30,16 @@ public class FaqsResourceWithAuthTest {
             .getName());
 
     private Main main;
+    private AuthService authService;
     private WebTarget faqsTarget;
+    private WebTarget searchTarget;
 
     @BeforeClass
     public void setUp() throws ConfigAccessException, JAXBException, IOException, InterruptedException {
 
         Configuration config = (new ConfigAccess()).getConf("src/main/resources/config.yaml");
         FaqDAO dao = new FaqDAO(config);
-        AuthService authService = new AuthService(config);
+        authService = new AuthService(config);
         AppWithAuthentication app = new AppWithAuthentication(config, dao, authService);
         main = new Main(config, app);
         main.start();
@@ -45,6 +47,7 @@ public class FaqsResourceWithAuthTest {
         // Client configuration
         Client client = getClient();
         faqsTarget = client.target(main.getBaseURI()).path("faqs");
+        searchTarget = client.target(main.getBaseURI()).path("search");
     }
 
     @AfterClass
@@ -57,11 +60,50 @@ public class FaqsResourceWithAuthTest {
         Assert.assertTrue(main.isStarted());
     }
 
-    @Test
+   @Test
     public void should_return_401_when_no_authorization_header() {
 
         Response resp = faqsTarget.request(MediaType.APPLICATION_XML_TYPE).get();
         Assert.assertEquals(401, resp.getStatus());
+    }
+
+    @Test
+    public void should_return_401_when_invalid_access_token() {
+
+        Response resp = faqsTarget.request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer jhgjfhfjhfgfdh.jghfjhjdhdj.hjhjhgsjhgj").get();
+        Assert.assertEquals(401, resp.getStatus());
+    }
+
+    @Test
+    public void should_return_200_when_admin_get_all_faqs() {
+
+        String jwt = authService.generateToken("bob", true);
+
+        Response resp = faqsTarget.request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt).get();
+        Assert.assertEquals(200, resp.getStatus());
+    }
+
+
+    @Test
+    public void should_return_403_when_admin_search_faqs() {
+
+        String jwt = authService.generateToken("bob", true);
+
+        Response resp = searchTarget.request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt).get();
+        Assert.assertEquals(403, resp.getStatus());
+    }
+
+    @Test
+    public void should_return_403_when_user_get_all_faqs() {
+
+        String jwt = authService.generateToken("alice", false);
+
+        Response resp = faqsTarget.request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt).get();
+        Assert.assertEquals(403, resp.getStatus());
     }
 
     private Client getClient() {

@@ -62,7 +62,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             this.request = request;
         }
 
-        public SecurityContext authenticate() {
+        SecurityContext authenticate() {
 
             String token = request.getHeaderString(HttpHeaders.AUTHORIZATION);
             token = token.substring((BEARER + " ").length());
@@ -70,7 +70,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
             return new SecurityContext() {
                 @Override
                 public Principal getUserPrincipal() {
-                    return () -> user.getUsername();
+                    return user::getUsername;
                 }
 
                 @Override

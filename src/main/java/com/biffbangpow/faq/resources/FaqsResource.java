@@ -3,6 +3,7 @@ package com.biffbangpow.faq.resources;
 import com.biffbangpow.faq.db.FaqDAO;
 import com.biffbangpow.faq.model.Faq;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 
@@ -16,7 +17,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
  */
 @Path("faqs")
 @Produces({APPLICATION_XML, APPLICATION_JSON})
-@Consumes({APPLICATION_XML, APPLICATION_JSON})
+@RolesAllowed("admin")
 public class FaqsResource {
 
     @Inject

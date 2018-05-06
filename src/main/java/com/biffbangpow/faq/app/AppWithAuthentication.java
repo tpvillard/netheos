@@ -50,6 +50,7 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.message.MessageProperties;
 import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.ext.ContextResolver;
@@ -65,6 +66,7 @@ public class AppWithAuthentication extends ResourceConfig {
         registerClasses(SearchResource.class);
         registerClasses(FaqDAOExceptionMapper.class);
         register(AuthenticationFilter.class);
+        register(RolesAllowedDynamicFeature.class);
         property(MessageProperties.XML_FORMAT_OUTPUT, true);
         register(createMoxyJsonResolver());
         register(new AppBinder(dao, config, authService));

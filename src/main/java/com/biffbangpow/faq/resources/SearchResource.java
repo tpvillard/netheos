@@ -3,6 +3,7 @@ package com.biffbangpow.faq.resources;
 import com.biffbangpow.faq.db.FaqDAO;
 import com.biffbangpow.faq.model.Faq;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.List;
@@ -15,6 +16,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
  */
 @Path("search")
 @Produces({APPLICATION_XML, APPLICATION_JSON})
+@RolesAllowed("user")
 public class SearchResource {
 
     @Inject

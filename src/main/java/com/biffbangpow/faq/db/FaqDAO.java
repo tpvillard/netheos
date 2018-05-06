@@ -36,7 +36,11 @@ public class FaqDAO {
 
     public List<Faq> searchFaqs(String queriedString) {
 
-        return getFaqs(buildSearchQuery(queriedString));
+        if (queriedString == null) {
+            return getFaqs();
+        } else {
+            return getFaqs(buildSearchQuery(queriedString));
+        }
     }
 
     private String buildSearchQuery(String query) {
