@@ -74,8 +74,15 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 }
 
                 @Override
-                public boolean isUserInRole(String s) {
-                    return s.equalsIgnoreCase("admin") && user.isAdmin();
+                public boolean isUserInRole(String role) {
+                    switch (role) {
+                        case "admin":
+                            return user.isAdmin();
+                        case "user":
+                            return !user.isAdmin();
+                        default:
+                            return false;
+                    }
                 }
 
                 @Override

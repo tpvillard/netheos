@@ -89,7 +89,7 @@ public class AuthService {
         Date exp = new Date(nowMillis + (1000L * 60 * config.getTokenDuration()));
         TokenBuilder builder = TokenBuilder.newBuilder(subject, ISSUER).expirationDate(exp).isAdmin(isAdmin);
         String jwt = builder.build(SECRET);
-        LOGGER.info("jwt: {}", jwt);
+        LOGGER.info("jwt for {}: {}", subject, jwt);
         return jwt;
     }
 }

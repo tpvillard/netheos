@@ -85,6 +85,16 @@ public class FaqsResourceWithAuthTest {
         Assert.assertEquals(200, resp.getStatus());
     }
 
+    @Test
+    public void should_return_200_when_user_search_faqs() {
+
+        String jwt = authService.generateToken("alice", false);
+
+        Response resp = searchTarget.request(MediaType.APPLICATION_JSON_TYPE)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwt).get();
+        Assert.assertEquals(200, resp.getStatus());
+    }
+
 
     @Test
     public void should_return_403_when_admin_search_faqs() {

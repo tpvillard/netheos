@@ -8,7 +8,6 @@ package com.biffbangpow.faq.config;
 public class Configuration {
 
     private String dbUrl;
-    private String dbName;
     private int port;
     private String docRoot;
     private int tokenDuration;
@@ -35,14 +34,6 @@ public class Configuration {
 
     public void setDbUrl(String dbUrl) {
         this.dbUrl = dbUrl;
-    }
-
-    public String getDbName() {
-        return dbName;
-    }
-
-    public void setDbName(String dbName) {
-        this.dbName = dbName;
     }
 
     public int getPort() {

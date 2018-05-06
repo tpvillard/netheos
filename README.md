@@ -1,4 +1,4 @@
-# netheos coding exercice
+# Netheos coding exercice
 
 [![Build Status](https://travis-ci.org/tpvillard/netheos.svg?branch=master)](https://travis-ci.org/tpvillard/netheos)
 
@@ -38,4 +38,12 @@ Pour effectuer des requêtes:
 * Generer un token d'acces.
 
 Utiliser la classe de test GenerateTokenTest. la classe fournit en sortie
-deux tokens. 1 token pour l'utilisateur bob (admin), 1 token pour l'utilisatrice alice (utilisatrice)
+deux tokens. 1 token pour l'admin bob, 1 token pour l'utilisatrice alice.
+Les tokens sont des jwt à une durée de vie limitée à 60 minutes.
+(L'application n'est pas complète et ne fournit pas de mécanisme pour rafraichir les tokens)
+
+Pour lister toutes les faqs dans la base:
+
+
+
+Pour rechercher des faqs dans la base:

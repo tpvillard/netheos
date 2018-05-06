@@ -5,4 +5,4 @@
 dbUrl: jdbc:sqlite:src/main/resources/faq.db
 port: 8082
 docRoot: webapp
-tokenDuration: 600
+tokenDuration: 60

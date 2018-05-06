@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
-public class AuthServiceTest {
+public class GenerateTokens {
 
     private AuthService authService;
 
@@ -26,9 +26,7 @@ public class AuthServiceTest {
     @Test
     public void should_generate_valid_token() {
 
-        String jwt = authService.generateToken("bob", true);
-        User bob = authService.validateToken(jwt);
-        Assert.assertEquals(bob.getUsername(), "bob");
-        Assert.assertEquals(bob.isAdmin(), true);
+        authService.generateToken("bob", true);
+        authService.generateToken("alice", false);
     }
 }
