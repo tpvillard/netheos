@@ -30,7 +30,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.biffbangpow.netheos.Main</mainClass>
+                    <mainClass>com.biffbangpow.faq.Main</mainClass>
                 </configuration>
             </plugin>
 

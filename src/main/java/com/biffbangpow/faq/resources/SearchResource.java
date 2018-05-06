@@ -12,7 +12,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 
 /**
- * JAX-RS resource for frequently asked questions.
+ * JAX-RS resource for searching frequently asked questions.
  */
 @Path("search")
 @Produces({APPLICATION_XML, APPLICATION_JSON})

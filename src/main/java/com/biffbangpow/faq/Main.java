@@ -1,6 +1,8 @@
 package com.biffbangpow.faq;
 
 import com.biffbangpow.faq.app.App;
+import com.biffbangpow.faq.app.AppWithAuthentication;
+import com.biffbangpow.faq.auth.AuthService;
 import com.biffbangpow.faq.config.ConfigAccess;
 import com.biffbangpow.faq.config.ConfigAccessException;
 import com.biffbangpow.faq.config.Configuration;
@@ -62,8 +64,9 @@ public class Main {
         try {
 
             Configuration config = (new ConfigAccess()).getConf("src/main/resources/config.yaml");
+            AuthService authService = new AuthService(config);
             FaqDAO dao = new FaqDAO(config);
-            App app = new App(config, dao);
+            AppWithAuthentication app = new AppWithAuthentication(config, dao, authService);
             final Main exec = new Main(config, app);
             exec.start();
             final CountDownLatch shutdown = new CountDownLatch(1);
