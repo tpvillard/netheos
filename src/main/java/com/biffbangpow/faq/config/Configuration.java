@@ -11,6 +11,15 @@ public class Configuration {
     private String dbName;
     private int port;
     private String docRoot;
+    private int tokenDuration;
+
+    public int getTokenDuration() {
+        return tokenDuration;
+    }
+
+    public void setTokenDuration(int tokenDuration) {
+        this.tokenDuration = tokenDuration;
+    }
 
     public String getDocRoot() {
         return docRoot;

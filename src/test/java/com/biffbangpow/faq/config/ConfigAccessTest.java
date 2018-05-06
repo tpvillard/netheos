@@ -11,5 +11,6 @@ public class ConfigAccessTest {
     public void should_read_config_from_file() throws ConfigAccessException {
         Configuration config = configAccess.getConf("src/main/resources/config.yaml");
         Assert.assertEquals(config.getPort(), 8082);
+        Assert.assertEquals(config.getTokenDuration(), 600);
     }
 }
