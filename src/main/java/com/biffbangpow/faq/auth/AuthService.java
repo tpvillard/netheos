@@ -19,7 +19,7 @@ public class AuthService {
     private static final Logger LOGGER = LoggerFactory
             .getLogger(AuthService.class);
 
-    // FIXME of course this should be kept secret....
+    // FIXME this should be kept secret....
     private static final byte[] SECRET = "mydirtylittlesecret".getBytes();
     private static final String ISSUER = "www.netheos.com";
 
